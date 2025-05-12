@@ -24,9 +24,9 @@ public sealed class TelnyxClientUtil : ITelnyxClientUtil
         {
             HttpClient httpClient = await httpClientUtil.Get(token).NoSync();
 
-            var apiKey = configuration.GetValueStrict<string>("Telnyx:ApiKey");
+            var telnyxToken = configuration.GetValueStrict<string>("Telnyx:Token");
 
-            var requestAdapter = new HttpClientRequestAdapter(new BearerAuthenticationProvider(apiKey), httpClient: httpClient);
+            var requestAdapter = new HttpClientRequestAdapter(new BearerAuthenticationProvider(telnyxToken), httpClient: httpClient);
 
             return new TelnyxOpenApiClient(requestAdapter);
         });
