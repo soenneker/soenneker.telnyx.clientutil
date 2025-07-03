@@ -46,8 +46,6 @@ public sealed class TelnyxClientUtil : ITelnyxClientUtil
                 _httpClient = await httpClientUtil.Get(token).NoSync();
             }
 
-
-
             var requestAdapter = new HttpClientRequestAdapter(new BearerAuthenticationProvider(telnyxToken), httpClient: _httpClient);
 
             return new TelnyxOpenApiClient(requestAdapter);
