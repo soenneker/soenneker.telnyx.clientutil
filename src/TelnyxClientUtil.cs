@@ -24,7 +24,7 @@ public sealed class TelnyxClientUtil : ITelnyxClientUtil
 
     public TelnyxClientUtil(ITelnyxHttpClient httpClientUtil, IConfiguration configuration, ILogger<TelnyxClientUtil> logger)
     {
-        _client = new AsyncSingleton<TelnyxOpenApiClient>(async (token, _) =>
+        _client = new AsyncSingleton<TelnyxOpenApiClient>(async token =>
         {
             var telnyxToken = configuration.GetValueStrict<string>("Telnyx:Token");
 
