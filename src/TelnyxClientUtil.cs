@@ -19,37 +19,45 @@ namespace Soenneker.Telnyx.ClientUtil;
 public sealed class TelnyxClientUtil : ITelnyxClientUtil
 {
     private readonly AsyncSingleton<TelnyxOpenApiClient> _client;
+    private readonly ITelnyxHttpClient _httpClientUtil;
+    private readonly IConfiguration _configuration;
+    private readonly ILogger<TelnyxClientUtil> _logger;
 
     private HttpClient? _httpClient;
 
     public TelnyxClientUtil(ITelnyxHttpClient httpClientUtil, IConfiguration configuration, ILogger<TelnyxClientUtil> logger)
     {
-        _client = new AsyncSingleton<TelnyxOpenApiClient>(async token =>
+        _httpClientUtil = httpClientUtil;
+        _configuration = configuration;
+        _logger = logger;
+        _client = new AsyncSingleton<TelnyxOpenApiClient>(CreateClient);
+    }
+
+    private async ValueTask<TelnyxOpenApiClient> CreateClient(CancellationToken token)
+    {
+        var telnyxToken = _configuration.GetValueStrict<string>("Telnyx:Token");
+
+        var logging = _configuration.GetValue<bool>("Telnyx:RequestResponseLogging");
+
+        if (logging)
         {
-            var telnyxToken = configuration.GetValueStrict<string>("Telnyx:Token");
-
-            var logging = configuration.GetValue<bool>("Telnyx:RequestResponseLogging");
-
-            if (logging)
+            var loggingHandler = new HttpClientLoggingHandler(_logger, new HttpClientLoggingOptions
             {
-                var loggingHandler = new HttpClientLoggingHandler(logger, new HttpClientLoggingOptions
-                {
-                    LogLevel = LogLevel.Debug
-                });
+                LogLevel = LogLevel.Debug
+            });
 
-                loggingHandler.InnerHandler = new HttpClientHandler();
+            loggingHandler.InnerHandler = new HttpClientHandler();
 
-                _httpClient = new HttpClient(loggingHandler);
-            }
-            else
-            {
-                _httpClient = await httpClientUtil.Get(token).NoSync();
-            }
+            _httpClient = new HttpClient(loggingHandler);
+        }
+        else
+        {
+            _httpClient = await _httpClientUtil.Get(token).NoSync();
+        }
 
-            var requestAdapter = new HttpClientRequestAdapter(new BearerAuthenticationProvider(telnyxToken), httpClient: _httpClient);
+        var requestAdapter = new HttpClientRequestAdapter(new BearerAuthenticationProvider(telnyxToken), httpClient: _httpClient);
 
-            return new TelnyxOpenApiClient(requestAdapter);
-        });
+        return new TelnyxOpenApiClient(requestAdapter);
     }
 
     public ValueTask<TelnyxOpenApiClient> Get(CancellationToken cancellationToken = default)
