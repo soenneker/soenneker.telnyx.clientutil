@@ -45,6 +45,6 @@
         <PackageReference Include="Soenneker.Kiota.BearerAuthenticationProvider" Version="4.0.27" />
         <PackageReference Include="Soenneker.Telnyx.Client" Version="4.0.355" />
         <PackageReference Include="Soenneker.Telnyx.OpenApiClient" Version="4.0.301" />
-        <PackageReference Include="Soenneker.Utils.AsyncSingleton" Version="4.0.749" />
+        <PackageReference Include="Soenneker.Utils.AsyncSingleton" Version="4.0.752" />
     </ItemGroup>
 </Project>
