@@ -4,10 +4,11 @@
   </Folder>
   <Folder Name="/.github/workflows/">
     <File Path=".github/workflows/build-and-test.yml" />
+    <File Path=".github/workflows/codeql.yml" />
     <File Path=".github/workflows/publish-package.yml" />
   </Folder>
   <Folder Name="/src/">
-    <Project Path="src/Soenneker.Telnyx.ClientUtil.csproj" />
+    <Project Path="src/Soenneker.Telnyx.ClientUtil/Soenneker.Telnyx.ClientUtil.csproj" />
   </Folder>
   <Folder Name="/test/">
     <Project Path="test/Soenneker.Telnyx.ClientUtil.Tests/Soenneker.Telnyx.ClientUtil.Tests.csproj" />

@@ -27,7 +27,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\Soenneker.Telnyx.ClientUtil.csproj" />
+        <ProjectReference Include="..\..\src\Soenneker.Telnyx.ClientUtil\Soenneker.Telnyx.ClientUtil.csproj" />
     </ItemGroup>
 
     <ItemGroup>
