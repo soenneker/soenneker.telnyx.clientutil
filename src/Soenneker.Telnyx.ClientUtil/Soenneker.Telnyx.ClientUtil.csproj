@@ -44,7 +44,7 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Soenneker.HttpClients.LoggingHandler" Version="4.0.151" />
+        <PackageReference Include="Soenneker.HttpClients.LoggingHandler" Version="4.0.152" />
         <PackageReference Include="Soenneker.Kiota.BearerAuthenticationProvider" Version="4.0.37" />
         <PackageReference Include="Soenneker.Telnyx.Client" Version="4.0.424" />
         <PackageReference Include="Soenneker.Telnyx.OpenApiClient" Version="4.0.341" />
