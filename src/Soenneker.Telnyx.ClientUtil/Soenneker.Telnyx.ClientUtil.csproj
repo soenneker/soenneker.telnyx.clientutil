@@ -44,10 +44,10 @@
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="Soenneker.HttpClients.LoggingHandler" Version="4.0.153" />
+        <PackageReference Include="Soenneker.HttpClients.LoggingHandler" Version="4.0.155" />
         <PackageReference Include="Soenneker.Kiota.BearerAuthenticationProvider" Version="4.0.37" />
-        <PackageReference Include="Soenneker.Telnyx.Client" Version="4.0.427" />
-        <PackageReference Include="Soenneker.Telnyx.OpenApiClient" Version="4.0.342" />
-        <PackageReference Include="Soenneker.Utils.AsyncSingleton" Version="4.0.785" />
+        <PackageReference Include="Soenneker.Telnyx.Client" Version="4.0.430" />
+        <PackageReference Include="Soenneker.Telnyx.OpenApiClient" Version="4.0.344" />
+        <PackageReference Include="Soenneker.Utils.AsyncSingleton" Version="4.0.788" />
     </ItemGroup>
 </Project>
