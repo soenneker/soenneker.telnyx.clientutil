@@ -11,7 +11,6 @@ using Soenneker.Utils.AsyncSingleton;
 using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
-using Soenneker.HttpClients.LoggingHandler;
 
 namespace Soenneker.Telnyx.ClientUtil;
 
@@ -21,15 +20,12 @@ public sealed class TelnyxClientUtil : ITelnyxClientUtil
     private readonly AsyncSingleton<TelnyxOpenApiClient> _client;
     private readonly ITelnyxHttpClient _httpClientUtil;
     private readonly IConfiguration _configuration;
-    private readonly ILogger<TelnyxClientUtil> _logger;
-
-    private HttpClient? _httpClient;
 
     public TelnyxClientUtil(ITelnyxHttpClient httpClientUtil, IConfiguration configuration, ILogger<TelnyxClientUtil> logger)
     {
         _httpClientUtil = httpClientUtil;
         _configuration = configuration;
-        _logger = logger;
+        _ = logger;
         _client = new AsyncSingleton<TelnyxOpenApiClient>(CreateClient);
     }
 
@@ -37,25 +33,9 @@ public sealed class TelnyxClientUtil : ITelnyxClientUtil
     {
         var telnyxToken = _configuration.GetValueStrict<string>("Telnyx:Token");
 
-        var logging = _configuration.GetValue<bool>("Telnyx:RequestResponseLogging");
+        HttpClient httpClient = await _httpClientUtil.Get(token).NoSync();
 
-        if (logging)
-        {
-            var loggingHandler = new HttpClientLoggingHandler(_logger, new HttpClientLoggingOptions
-            {
-                LogLevel = LogLevel.Debug
-            });
-
-            loggingHandler.InnerHandler = new HttpClientHandler();
-
-            _httpClient = new HttpClient(loggingHandler);
-        }
-        else
-        {
-            _httpClient = await _httpClientUtil.Get(token).NoSync();
-        }
-
-        var requestAdapter = new HttpClientRequestAdapter(new BearerAuthenticationProvider(telnyxToken), httpClient: _httpClient);
+        var requestAdapter = new HttpClientRequestAdapter(new BearerAuthenticationProvider(telnyxToken), httpClient: httpClient);
 
         return new TelnyxOpenApiClient(requestAdapter);
     }
@@ -70,8 +50,6 @@ public sealed class TelnyxClientUtil : ITelnyxClientUtil
     /// </summary>
     public void Dispose()
     {
-        _httpClient?.Dispose();
-
         _client.Dispose();
     }
 
@@ -81,8 +59,6 @@ public sealed class TelnyxClientUtil : ITelnyxClientUtil
     /// <returns>A task that represents the asynchronous operation.</returns>
     public ValueTask DisposeAsync()
     {
-        _httpClient?.Dispose();
-
         return _client.DisposeAsync();
     }
 }
