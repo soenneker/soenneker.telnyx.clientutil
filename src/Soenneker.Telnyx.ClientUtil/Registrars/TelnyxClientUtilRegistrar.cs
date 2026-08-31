@@ -7,7 +7,7 @@ using Soenneker.Utils.HttpClientCache.Registrar;
 namespace Soenneker.Telnyx.ClientUtil.Registrars;
 
 /// <summary>
-/// An async thread-safe singleton for the Telnyx OpenApiClient
+/// Registers a reusable generated client for Telnyx's REST API.
 /// </summary>
 public static class TelnyxClientUtilRegistrar
 {
