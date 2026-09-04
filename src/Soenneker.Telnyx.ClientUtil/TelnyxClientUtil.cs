@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 
 namespace Soenneker.Telnyx.ClientUtil;
 
+/// <inheritdoc cref="ITelnyxClientUtil" />
 public sealed class TelnyxClientUtil : ITelnyxClientUtil
 {
     private readonly AsyncSingleton<TelnyxOpenApiClient> _client;
