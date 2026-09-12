@@ -45,6 +45,6 @@
 
     <ItemGroup>
         <PackageReference Include="Soenneker.Telnyx.Client" Version="4.0.584" />
-        <PackageReference Include="Soenneker.Telnyx.OpenApiClient" Version="4.0.424" />
+        <PackageReference Include="Soenneker.Telnyx.OpenApiClient" Version="4.0.425" />
     </ItemGroup>
 </Project>
